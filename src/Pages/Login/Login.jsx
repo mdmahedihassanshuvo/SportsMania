@@ -1,17 +1,60 @@
-// import React from 'react';
+// import React, { useContext } from 'react';
 // import { Helmet } from 'react-helmet-async';
 // import { useForm } from 'react-hook-form';
 // import Lottie from "lottie-react";
 // import groovyWalkAnimation from "../../assets/login.json";
 // import googleIcon from '../../assets/images/google-icon.png'
 // import { Link } from 'react-router-dom';
+// import { AuthContext } from '../../Provider/AuthProvider';
+// import Swal from 'sweetalert2';
 
 // const Login = () => {
 
-//     const { register, handleSubmit, formState: { errors } } = useForm();
+//     const { loginUser, loginByGoogle } = useContext(AuthContext);
+//     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 //     const onSubmit = data => {
-//         console.log(data)
+//         console.log(data);
+//         loginUser(data.email, data.password)
+//             .then(result => {
+//                 const user = result.user;
+//                 console.log(user);
+//                 Swal.fire({
+//                     position: 'center',
+//                     icon: 'success',
+//                     title: 'Login successfully',
+//                     showConfirmButton: false,
+//                     timer: 1500
+//                 })
+//                 reset();
+//             })
+//             .catch(error => {
+//                 Swal.fire({
+//                     icon: 'error',
+//                     title: 'Oops...',
+//                     text: error.message
+//                   })
+//             })
 //     };
+
+//     const handleSocialLogin = () => {
+//         loginByGoogle()
+//             .then(() => {
+//                 Swal.fire({
+//                     position: 'center',
+//                     icon: 'success',
+//                     title: 'Login by Google successfully',
+//                     showConfirmButton: false,
+//                     timer: 1500
+//                 })
+//             })
+//             .catch(error => {
+//                 Swal.fire({
+//                     icon: 'error',
+//                     title: 'Oops...',
+//                     text: error.message
+//                 })
+//             })
+//     }
 
 //     return (
 //         <div className='my-10'>
@@ -47,7 +90,7 @@
 //                                 <input className="btn btn-primary" type="submit" value="Login" />
 //                             </div>
 //                             <div className="divider">OR</div>
-//                             <button className='btn flex items-center justify-center'>
+//                             <button onClick={handleSocialLogin} className='btn flex items-center justify-center'>
 //                                 <img className='w-10' src={googleIcon} alt="" />
 //                                 <p className='text-lg'>Login With Google</p>
 //                             </button>
