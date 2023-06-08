@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Header = () => {
+
+    const { user, logout } = useContext(AuthContext)
+
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Logout Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                localStorage.removeItem('accessToken')
+            })
+            .catch(error => console.log(error))
+    }
 
     const listItem = <>
         <li>
@@ -10,7 +29,7 @@ const Header = () => {
                 className={({ isActive }) =>
                     isActive
                         ? "text-blue-600 border-b-4 border-blue-600"
-                            : "hover:border-b-4 hover:border-accent"
+                        : "hover:border-b-4 hover:border-accent"
                 }
             >
                 <span className='text-lg font-medium'>Home</span>
@@ -22,7 +41,7 @@ const Header = () => {
                 className={({ isActive }) =>
                     isActive
                         ? "text-blue-600 border-b-4 border-blue-600"
-                            : "hover:border-b-4 hover:border-accent"
+                        : "hover:border-b-4 hover:border-accent"
                 }
             >
                 <span className='text-lg font-medium'>Instructors</span>
@@ -34,7 +53,7 @@ const Header = () => {
                 className={({ isActive }) =>
                     isActive
                         ? "text-blue-600 border-b-4 border-blue-600"
-                            : "hover:border-b-4 hover:border-accent"
+                        : "hover:border-b-4 hover:border-accent"
                 }
             >
                 <span className='text-lg font-medium'>Classes</span>
@@ -46,24 +65,33 @@ const Header = () => {
                 className={({ isActive }) =>
                     isActive
                         ? "text-blue-600 border-b-4 border-blue-600"
-                            : "hover:border-b-4 hover:border-accent"
+                        : "hover:border-b-4 hover:border-accent"
                 }
             >
                 <span className='text-lg font-medium'>Dashboard</span>
             </NavLink>
         </li>
-        <li>
-            <NavLink
-                to='/login'
-                className={({ isActive }) =>
-                    isActive
-                        ? "text-blue-600 border-b-4 border-blue-600"
+        {user ?
+            <>
+                <button onClick={handleLogout} className="btn btn-ghost mr-2"><span className='text-lg font-medium'>Logout</span></button>
+                <div className="avatar">
+                    <div className="w-12 rounded-full">
+                        <img title={user?.displayName} src={user?.photoURL} />
+                    </div>
+                </div>
+            </>
+            : <li>
+                <NavLink
+                    to='/login'
+                    className={({ isActive }) =>
+                        isActive
+                            ? "text-blue-600 border-b-4 border-blue-600"
                             : "hover:border-b-4 hover:border-accent"
-                }
-            >
-                <span className='text-lg font-medium'>Login</span>
-            </NavLink>
-        </li>
+                    }
+                >
+                    <span className='text-lg font-medium'>Login</span>
+                </NavLink>
+            </li>}
     </>
 
     return (
@@ -77,7 +105,7 @@ const Header = () => {
                         {listItem}
                     </ul>
                 </div>
-                <Link to='/' className='normal-case text-xl'>SportsMania</Link>
+                <Link to='/' className='font-medium text-xl'><span className='text-orange-600'>Sports</span><span className='text-accent'>Mania</span></Link>
             </div>
             <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
