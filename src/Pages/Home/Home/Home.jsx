@@ -12,9 +12,9 @@ const Home = () => {
                     SportsMania | Home
                 </title>
             </Helmet>
-            <Banner/>
-            <PopularClasses/>
-            <PopularInstructor/>
+            <Banner />
+            <PopularClasses />
+            <PopularInstructor />
         </div>
     );
 };
