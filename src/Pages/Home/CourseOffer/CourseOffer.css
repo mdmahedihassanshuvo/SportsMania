@@ -1,0 +1,9 @@
+.offer {
+    height: 400px !important;
+    background-image: url(../../../assets/images/display.jpg), url(../../../assets//images/bg.png);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    /* Additional styles for the CourseOffer section */
+  }
+  

@@ -9,22 +9,24 @@ import bannerImg4 from '../../../assets/images/banner4.jpg'
 
 const Banner = () => {
     return (
-        <Carousel 
-        autoPlay={true}
-        interval={1500}
-        infiniteLoop={true}
+        <Carousel
+            showThumbs={false}
+            showStatus={false}
+            autoPlay={true}
+            interval={1500}
+            infiniteLoop={true}
         >
             <div>
-                <img src={bannerImg1} alt='banner-1'/>
+                <img className='h-[700px]' src={bannerImg1} alt='banner-1' />
             </div>
             <div>
-                <img src={bannerImg2} alt='banner-2'/>
+                <img className='h-[700px]' src={bannerImg2} alt='banner-2' />
             </div>
             <div>
-                <img src={bannerImg3} alt='banner-3'/>
+                <img className='h-[700px]' src={bannerImg3} alt='banner-3' />
             </div>
             <div>
-                <img src={bannerImg4} alt='banner-4'/>
+                <img className='h-[700px]' src={bannerImg4} alt='banner-4' />
             </div>
         </Carousel>
     );
