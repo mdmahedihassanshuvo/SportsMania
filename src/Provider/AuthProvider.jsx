@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from '../firebase.config';
 import axios from 'axios';
 
@@ -25,6 +25,13 @@ const AuthProvider = ({ children }) => {
     const loginByGoogle = () => {
         setLoading(true)
         return signInWithPopup(auth, GoogleProvider)
+    }
+
+    const profileUpdate = (name, photo) => {
+        setLoading(true)
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo
+        })
     }
 
     const logout = () => {
@@ -54,6 +61,7 @@ const AuthProvider = ({ children }) => {
         loading,
         createUser,
         loginUser,
+        profileUpdate,
         loginByGoogle,
         logout
     }

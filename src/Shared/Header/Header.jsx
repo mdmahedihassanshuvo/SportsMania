@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 const Header = () => {
 
     const { user, logout } = useContext(AuthContext)
+    // console.log(user)
+    
 
     const handleLogout = () => {
         logout()

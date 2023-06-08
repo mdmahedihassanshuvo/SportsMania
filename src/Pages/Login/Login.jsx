@@ -4,13 +4,18 @@ import { useForm } from 'react-hook-form';
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/login.json";
 import googleIcon from '../../assets/images/google-icon.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Login = () => {
 
     const { loginUser, loginByGoogle } = useContext(AuthContext);
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location?.state?.from?.pathname || '/'
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const onSubmit = data => {
         console.log(data);
@@ -25,6 +30,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                navigate(from, { replace: true });
                 reset();
             })
             .catch(error => {
@@ -32,20 +38,27 @@ const Login = () => {
                     icon: 'error',
                     title: 'Oops...',
                     text: error.message
-                  })
+                })
             })
     };
 
     const handleSocialLogin = () => {
         loginByGoogle()
-            .then(() => {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Login by Google successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+            .then((result) => {
+                const loggedUser = result.user
+                axios.post('http://localhost:5000/users', { name: loggedUser.name, email: loggedUser.email })
+                    .then(res => {
+                        console.log(res.data);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Login by Google successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate(from, { replace: true })
+                        return res.data;
+                    })
             })
             .catch(error => {
                 Swal.fire({

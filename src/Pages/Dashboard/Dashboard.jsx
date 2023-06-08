@@ -1,9 +1,47 @@
 import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
+import { MdClass, MdFlightClass, MdHotelClass } from "react-icons/md";
+import { FaHome, FaUsers } from "react-icons/fa";
 
 const Dashboard = () => {
+
+    const isAdmin = true;
+    // const isInstructor = false;
+
     return (
-        <div>
-            this is dashboard
+        <div className="drawer lg:drawer-open">
+            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col items-center justify-center">
+                <Outlet />
+                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+
+            </div>
+            <div className="drawer-side">
+                <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+                <ul className="menu p-4 w-80 h-full bg-slate-800 text-xl text-center text-neutral-content">
+                    {/* Sidebar content here */}
+                    <li><NavLink to='/'><FaHome /> Home</NavLink></li>
+                    {
+                        isAdmin ? <>
+                            <li><NavLink to='/dashboard/manageclasses'><MdClass></MdClass> Manage classes</NavLink></li>
+                            <li><NavLink to='/dashboard/allusers'><FaUsers /> Manage Users</NavLink></li>
+                        </> :
+                            <>
+                                <li><NavLink to='/dashboard/selectedclass'><MdClass></MdClass> Selected Classes</NavLink></li>
+                                <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
+                            </>
+                    }
+                    {/* {isInstructor ? <>
+                        <li><NavLink to='/dashboard/addclass'><MdClass></MdClass>Add Class</NavLink></li>
+                        <li><NavLink to='/dashboard/myclass'><MdFlightClass /> My class</NavLink></li>
+                    </> :
+                        <>
+                            <li><NavLink to='/dashboard/selectedclass'><MdClass></MdClass> Selected Classes</NavLink></li>
+                            <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
+                        </>} */}
+                </ul>
+
+            </div>
         </div>
     );
 };

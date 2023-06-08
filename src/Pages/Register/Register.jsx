@@ -4,13 +4,17 @@ import { useForm } from 'react-hook-form';
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/login.json";
 import googleIcon from '../../assets/images/google-icon.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Register = () => {
 
-    const { createUser, loginByGoogle } = useContext(AuthContext);
+    const { createUser, loginByGoogle, profileUpdate } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location?.state?.from || '/'
     const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
     const password = watch('password', '');
     const onSubmit = data => {
@@ -18,15 +22,24 @@ const Register = () => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Sign Up successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                reset();
+                // console.log(user);
+                profileUpdate(data.name, data.photo)
+                    .then(() => {
+                        axios.post('http://localhost:5000/users', { name: data.name, email: data.email })
+                            .then(res => {
+                                console.log(res.data);
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Sign Up successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                navigate(from, { replace: true })
+                                reset();
+                                return res.data;
+                            })
+                    })
             })
             .catch(error => {
                 Swal.fire({
@@ -39,14 +52,21 @@ const Register = () => {
 
     const handleSocialLogin = () => {
         loginByGoogle()
-            .then(() => {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Login by Google successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+            .then((result) => {
+                const loggedUser = result.user;
+                axios.post('http://localhost:5000/users', { name: loggedUser.displayName, email: loggedUser.email })
+                    .then(res => {
+                        console.log(res.data);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Login by Google successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate(from, { replace: true })
+                        return res.data;
+                    })
             })
             .catch(error => {
                 Swal.fire({
@@ -117,7 +137,7 @@ const Register = () => {
                                 <input type="text" {...register("photo", { required: true })} placeholder="password" className="input input-bordered" />
                             </div>
                             <div className="form-control mt-6">
-                                <input className="btn btn-primary" type="submit" value="Login" />
+                                <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
                             <div className="divider">OR</div>
                             <button onClick={handleSocialLogin} className='btn flex items-center justify-center'>
