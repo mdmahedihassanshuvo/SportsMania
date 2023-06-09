@@ -7,7 +7,8 @@ import useAdmin from '../../Hooks/useAdmin';
 const Dashboard = () => {
 
     // const isAdmin = true;
-const [isAdmin] = useAdmin()
+    const [isAdmin] = useAdmin()
+    const isInstructor = true;
 
     return (
         <div className="drawer lg:drawer-open">
@@ -22,24 +23,25 @@ const [isAdmin] = useAdmin()
                 <ul className="menu p-4 w-80 h-full bg-slate-800 text-xl text-center text-neutral-content">
                     {/* Sidebar content here */}
                     <li><NavLink to='/'><FaHome /> Home</NavLink></li>
-                    {
-                        isAdmin ? <>
-                            <li><NavLink to='/dashboard/manageclasses'><MdClass></MdClass> Manage classes</NavLink></li>
-                            <li><NavLink to='/dashboard/allusers'><FaUsers /> Manage Users</NavLink></li>
-                        </> :
-                            <>
-                                <li><NavLink to='/dashboard/selectedclass'><MdClass></MdClass> Selected Classes</NavLink></li>
-                                <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
-                            </>
-                    }
-                    {/* {isInstructor ? <>
-                        <li><NavLink to='/dashboard/addclass'><MdClass></MdClass>Add Class</NavLink></li>
-                        <li><NavLink to='/dashboard/myclass'><MdFlightClass /> My class</NavLink></li>
-                    </> :
+                    {isAdmin && (
                         <>
-                            <li><NavLink to='/dashboard/selectedclass'><MdClass></MdClass> Selected Classes</NavLink></li>
+                            <li><NavLink to='/dashboard/manageclasses'><MdClass /> Manage classes</NavLink></li>
+                            <li><NavLink to='/dashboard/allusers'><FaUsers /> Manage Users</NavLink></li>
+                        </>
+                    )}
+                    {!isAdmin && isInstructor && (
+                        <>
+                            <li><NavLink to='/dashboard/addclass'><MdClass /> Add Class</NavLink></li>
+                            <li><NavLink to='/dashboard/myclass'><MdFlightClass /> My class</NavLink></li>
+                        </>
+                    )}
+                    {!isAdmin && !isInstructor && (
+                        <>
+                            <li><NavLink to='/dashboard/selectedclass'><MdClass /> Selected Classes</NavLink></li>
                             <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
-                        </>} */}
+                        </>
+                    )}
+
                 </ul>
 
             </div>

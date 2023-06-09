@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 
 const Classes = () => {
 
-    const [popularClasses] = usePopularClasses()
+    // const [popularClasses] = usePopularClasses()
 
     return (
         <div className='mb-3 lg:mb-5'>
@@ -16,9 +16,9 @@ const Classes = () => {
                 </title>
             </Helmet>
             <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Here are Our Course Classes</h2>
-            <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
+            {/* <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
-                    popularClasses.slice(0, 6).map((cla) => (
+                    popularClasses.map((cla) => (
                         <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla.id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
@@ -37,7 +37,7 @@ const Classes = () => {
                         </div>
                     ))
                 }
-            </div>
+            </div> */}
         </div>
     );
 };

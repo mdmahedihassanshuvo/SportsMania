@@ -15,17 +15,30 @@ const ManageUsers = () => {
         queryKey: ['users'],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get('/users')
+            const res = await axiosSecure('/users')
             return res.data
         }
     })
 
     const handleInstructor = (user) => {
+        axios.patch('http://localhost:5000/users/admin', { email: user?.email })
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${user.name} is now an Instructor`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+    };
 
-    }
 
     const handleAdmin = (user) => {
-        axios.patch(`http://localhost:5000/users/admin/${user._id}`)
+        axios.patch(`http://localhost:5000/users/admin/${user?._id}`)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch()

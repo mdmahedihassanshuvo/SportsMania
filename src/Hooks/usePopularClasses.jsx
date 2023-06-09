@@ -5,7 +5,7 @@ const usePopularClasses = () => {
     const {data: popularClasses=[], refetch} = useQuery({
         queryKey: ['popularcls'],
         queryFn: async ()=>{
-            const res = await axios.get('http://localhost:5000/popularclasses')
+            const res = await axios.get('http://localhost:5000/classes')
             console.log(res.data)
             return res.data
         }
