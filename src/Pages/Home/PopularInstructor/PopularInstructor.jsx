@@ -14,7 +14,7 @@ const PopularInstructor = () => {
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     popularInstructor.map(instructor =>
-                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={instructor.id}>
+                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={instructor._id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
                                     className="rounded-xl"

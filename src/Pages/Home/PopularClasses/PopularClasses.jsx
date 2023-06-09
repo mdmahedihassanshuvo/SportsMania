@@ -13,7 +13,7 @@ const PopularClasses = () => {
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     popularClasses.slice(0, 6).map((cla) => (
-                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla.id}>
+                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla._id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
                                     className="rounded-xl"

@@ -15,7 +15,7 @@ const ManageUsers = () => {
         queryKey: ['users'],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure(`/users?email=${user?.email}`)
+            const res = await axiosSecure.get('/users')
             return res.data
         }
     })
@@ -61,8 +61,8 @@ const ManageUsers = () => {
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user?.roll === 'admin' ? 'Admin' : <button onClick={() => handleAdmin(user)} className='btn bg-blue-600 text-white btn-sm'><FaUserShield /></button>}</td>
-                                <td>{user?.roll === 'instructor' ? 'Instructor' : <button onClick={() => handleInstructor(user)} className='btn bg-orange-600 text-white btn-sm'><FaUserGraduate /></button>}</td>
+                                <td>{user?.role === 'admin' ? 'Admin' : <button onClick={() => handleAdmin(user)} className='btn bg-blue-600 text-white btn-sm'><FaUserShield /></button>}</td>
+                                <td>{user?.role === 'instructor' ? 'Instructor' : <button onClick={() => handleInstructor(user)} className='btn bg-orange-600 text-white btn-sm'><FaUserGraduate /></button>}</td>
 
                             </tr>)
                         }
