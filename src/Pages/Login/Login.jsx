@@ -46,7 +46,7 @@ const Login = () => {
         loginByGoogle()
             .then((result) => {
                 const loggedUser = result.user
-                axios.post('http://localhost:5000/users', { name: loggedUser.name, email: loggedUser.email })
+                axios.post('http://localhost:5000/users', { name: loggedUser.name, email: loggedUser.email, photo: loggedUser.photoURL })
                     .then(res => {
                         console.log(res.data);
                         Swal.fire({

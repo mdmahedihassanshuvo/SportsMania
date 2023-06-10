@@ -25,7 +25,7 @@ const Register = () => {
                 // console.log(user);
                 profileUpdate(data.name, data.photo)
                     .then(() => {
-                        axios.post('http://localhost:5000/users', { name: data.name, email: data.email })
+                        axios.post('http://localhost:5000/users', { name: data.name, email: data.email, photo: data.photo })
                             .then(res => {
                                 console.log(res.data);
                                 Swal.fire({
@@ -54,7 +54,7 @@ const Register = () => {
         loginByGoogle()
             .then((result) => {
                 const loggedUser = result.user;
-                axios.post('http://localhost:5000/users', { name: loggedUser.displayName, email: loggedUser.email })
+                axios.post('http://localhost:5000/users', { name: loggedUser.displayName, email: loggedUser.email, photo: loggedUser.photoURL })
                     .then(res => {
                         console.log(res.data);
                         Swal.fire({
