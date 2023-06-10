@@ -1,13 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useMyClass from '../../../../Hooks/useMyClass';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import ManageClassRow from '../../../../Reused/ManageClassRow';
 
 const ManageClasses = () => {
+    const [myClasses, refetch] = useMyClass();
+    const [disabledButtons, setDisabledButtons] = useState(false);
+    const [axiosSecure] = useAxiosSecure();
 
-    const [myClasses, refetch] = useMyClass()
-    console.log(myClasses)
+    const handleApprove = (event, cls) => {
+        event.preventDefault();
+        const updatedStatus = 'approve';
+        axiosSecure.patch(`/addedClasses/${cls._id}`, { status: updatedStatus })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.modifiedCount) {
+                    refetch()
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${cls.name} is an approve`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            });
+    };
+
+    const handleDeny = (event, cls) => {
+        event.preventDefault();
+        const updatedStatus = 'deny';
+        axiosSecure.patch(`/addedClasses/${cls._id}`, { status: updatedStatus })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.modifiedCount) {
+                    refetch()
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${cls.name} is denied`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            });
+    };
+
+    // const handleFeedback = (cls) => {
+    //    console.log('feedback')
+    // }
 
     return (
-        <div className='w-3/4'>
+        <div className="w-3/4">
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -23,30 +68,7 @@ const ManageClasses = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            myClasses.map((cls, index) => <tr key={cls._id}>
-                                <th>
-                                    {index + 1}
-                                </th>
-                                <td>
-                                    <div className="flex items-center space-x-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={cls.image} alt="Avatar Tailwind CSS Component" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    {cls.name}
-                                </td>
-                                <td>{cls.status}</td>
-                                <td>{cls?.status === 'approve' ? 'approve' : <button onClick={() => handleApprove(cls)} className='btn bg-orange-600 hover:bg-slate-700 text-white btn-sm'>Approve</button>}</td>
-                                <td>{cls?.status === 'approve' ? 'approve' : <button onClick={() => handleApprove(cls)} className='btn bg-orange-600 hover:bg-slate-700 text-white btn-sm'>Deny</button>}</td>
-                                <td>{cls?.status === 'approve' ? 'approve' : <button onClick={() => handleApprove(cls)} className='btn bg-orange-600 hover:bg-slate-700 text-white btn-sm'>Feedback</button>}</td>
-                            </tr>)
-                        }
-
+                        {myClasses.map((cls, index) => <ManageClassRow key={cls._id} cls={cls} index={index} handleApprove={handleApprove} handleDeny={handleDeny} />)}
                     </tbody>
                 </table>
             </div>
