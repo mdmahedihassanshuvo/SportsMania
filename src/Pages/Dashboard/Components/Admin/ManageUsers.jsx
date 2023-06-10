@@ -5,20 +5,11 @@ import { FaUser, FaUserAlt, FaUserGraduate, FaUserShield } from 'react-icons/fa'
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import useUser from '../../../../Hooks/useUser';
 
 const ManageUsers = () => {
 
-    const { user, loading } = useContext(AuthContext)
-    // const token = localStorage.getItem('token');
-    const [axiosSecure] = useAxiosSecure()
-    const { data: users = [], refetch } = useQuery({
-        queryKey: ['users'],
-        enabled: !loading,
-        queryFn: async () => {
-            const res = await axiosSecure('/users')
-            return res.data
-        }
-    })
+    const [users, refetch] = useUser()
 
     const handleInstructor = (user) => {
         axios.patch('http://localhost:5000/users/admin', { email: user?.email })

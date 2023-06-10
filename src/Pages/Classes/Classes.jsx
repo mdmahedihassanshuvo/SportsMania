@@ -1,14 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useUser from '../../Hooks/useUser';
+import { set } from 'react-hook-form';
+import useAdmin from '../../Hooks/useAdmin';
+import useInstructor from '../../Hooks/useInstructor';
 
 const Classes = () => {
 
-    const { user, loading } = useContext(AuthContext)
+    const { loading } = useContext(AuthContext)
+    const [isAdmin] = useAdmin()
+    const [isInstructor] = useInstructor()
     const [axiosSecure] = useAxiosSecure();
     const { data: approveClasses = [], refetch } = useQuery({
         queryKey: ['approveClasses'],
@@ -31,7 +37,7 @@ const Classes = () => {
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     approveClasses.map((cla) => (
-                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla.id}>
+                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla._id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
                                     className="rounded-xl"
@@ -43,7 +49,7 @@ const Classes = () => {
                                 <h2 className="card-title">Name: {cla.name}</h2>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <button className="btn btn-accent text-white">Enroll Now</button>
+                                    <button className="btn btn-accent text-white" disabled={isAdmin || isInstructor}>Enroll Now</button>
                                 </div>
                             </div>
                         </div>

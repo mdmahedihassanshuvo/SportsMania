@@ -2,6 +2,7 @@ import React from 'react';
 import usePopularClasses from '../../../Hooks/usePopularClasses';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link } from 'react-router-dom';
 
 const PopularClasses = () => {
     const [popularClasses] = usePopularClasses();
@@ -25,7 +26,7 @@ const PopularClasses = () => {
                                 <h2 className="card-title">Name: {cla.name}</h2>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <button className="btn btn-accent text-white">Enroll Now</button>
+                                    <Link to='/classes' className="btn btn-accent text-white">Checkout Now</Link>
                                 </div>
                             </div>
                         </div>

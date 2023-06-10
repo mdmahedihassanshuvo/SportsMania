@@ -3,12 +3,13 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { MdClass, MdFlightClass, MdHotelClass } from "react-icons/md";
 import { FaHome, FaUsers } from "react-icons/fa";
 import useAdmin from '../../Hooks/useAdmin';
+import useInstructor from '../../Hooks/useInstructor';
 
 const Dashboard = () => {
 
     // const isAdmin = true;
     const [isAdmin] = useAdmin()
-    const isInstructor = true;
+    const [isInstructor] = useInstructor()
 
     return (
         <div className="drawer lg:drawer-open">
