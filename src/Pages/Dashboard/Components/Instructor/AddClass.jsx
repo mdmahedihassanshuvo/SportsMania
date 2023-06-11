@@ -7,13 +7,13 @@ import { AuthContext } from '../../../../Provider/AuthProvider';
 
 const AddClass = () => {
 
-    const {user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const onSubmit = data => {
         console.log(data)
         const { name, price, instructor, photo, seats } = data;
-        axiosSecure.post('/addedClasses', { name, price: parseFloat(price), instructor, image: photo, status: 'pending', available_seats: seats })
+        axiosSecure.post('/addedClasses', { email: user?.email, name, price: parseFloat(price), instructor, image: photo, status: 'pending', available_seats: seats })
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

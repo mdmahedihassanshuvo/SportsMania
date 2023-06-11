@@ -5,26 +5,52 @@ import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
-import useUser from '../../Hooks/useUser';
-import { set } from 'react-hook-form';
 import useAdmin from '../../Hooks/useAdmin';
 import useInstructor from '../../Hooks/useInstructor';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Classes = () => {
 
-    const { loading } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
+    const navigate = useNavigate()
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
     const [axiosSecure] = useAxiosSecure();
     const { data: approveClasses = [], refetch } = useQuery({
         queryKey: ['approveClasses'],
-        enabled: !loading,
+        // enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure('/addedClasses?status=approve');
+            const res = await axios('http://localhost:5000/addedClasses?status=approve');
             console.log(res.data);
             return res.data;
         },
     });
+
+    console.log(approveClasses)
+
+    const handleSelect = (cla) => {
+        console.log('click')
+        if (!user) {
+            navigate('/login');
+         }
+         const { available_seats, price, name, instructor, image } = cla;
+         axiosSecure.post(`/selectClasses/${user.email}`, { email: user.email, available_seats, price: parseFloat(price), name, instructor, image })
+             .then(res => {
+                 console.log(res.data)
+                 if (res.data.insertedId) {
+                     Swal.fire({
+                         position: 'center',
+                         icon: 'success',
+                         title: `${cla.name} is selected`,
+                         showConfirmButton: false,
+                         timer: 1500
+                     })
+                 }
+             })
+    }
 
     return (
         <div className='mb-3 lg:mb-5'>
@@ -47,9 +73,11 @@ const Classes = () => {
                             </figure>
                             <div className="card-body items-start text-start">
                                 <h2 className="card-title">Name: {cla.name}</h2>
+                                <p>Instructor Name: {cla.instructor}</p>
+                                <p>Available Seats: {cla.available_seats}</p>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <button className="btn btn-accent text-white" disabled={isAdmin || isInstructor}>Enroll Now</button>
+                                    <button onClick={() => handleSelect(cla)} className="btn btn-accent text-white" disabled={isAdmin || isInstructor}>Select Now</button>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { MdClass, MdFlightClass, MdHotelClass } from "react-icons/md";
 import { FaHome, FaUsers } from "react-icons/fa";
 import useAdmin from '../../Hooks/useAdmin';
 import useInstructor from '../../Hooks/useInstructor';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const Dashboard = () => {
 
-    // const isAdmin = true;
+    const {user} = useContext(AuthContext)
+    console.log(user)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
 
@@ -22,7 +24,6 @@ const Dashboard = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 h-full bg-slate-800 text-xl text-center text-neutral-content">
-                    {/* Sidebar content here */}
                     <li><NavLink to='/'><FaHome /> Home</NavLink></li>
                     {isAdmin && (
                         <>
@@ -40,6 +41,7 @@ const Dashboard = () => {
                         <>
                             <li><NavLink to='/dashboard/selectedclass'><MdClass /> Selected Classes</NavLink></li>
                             <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
+                            <li><NavLink to='/dashboard/paymentHistory'><MdHotelClass /> Payment Classes</NavLink></li>
                         </>
                     )}
 

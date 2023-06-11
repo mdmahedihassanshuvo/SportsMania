@@ -11,7 +11,7 @@ const useMyClass = () => {
         queryKey: ['myClasses', user?.displayName],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get('/addedClasses')
+            const res = await axiosSecure.get(`addedClasses?email=${user?.email}`)
             return res.data;
         }
     })

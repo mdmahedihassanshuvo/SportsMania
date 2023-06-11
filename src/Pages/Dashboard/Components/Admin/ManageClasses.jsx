@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useMyClass from '../../../../Hooks/useMyClass';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import ManageClassRow from '../../../../Reused/ManageClassRow';
+import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from '../../../../Provider/AuthProvider';
 
 const ManageClasses = () => {
-    const [myClasses, refetch] = useMyClass();
-    const [disabledButtons, setDisabledButtons] = useState(false);
+    // const [myClasses, refetch] = useMyClass();
+    const { loading } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure();
+
+    const { data: manageClasses = [], refetch } = useQuery({
+        queryKey: ['manageClasses'],
+        enabled: !loading,
+        queryFn: async () => {
+            const res = await axiosSecure.get('/addedClasses')
+            console.log(res.data)
+            return res.data
+        }
+    })
 
     const handleApprove = (event, cls) => {
         event.preventDefault();
@@ -47,10 +59,6 @@ const ManageClasses = () => {
             });
     };
 
-    // const handleFeedback = (cls) => {
-    //    console.log('feedback')
-    // }
-
     return (
         <div className="w-3/4">
             <div className="overflow-x-auto">
@@ -68,7 +76,7 @@ const ManageClasses = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {myClasses.map((cls, index) => <ManageClassRow key={cls._id} cls={cls} index={index} handleApprove={handleApprove} handleDeny={handleDeny} />)}
+                        {manageClasses.map((cls, index) => <ManageClassRow key={cls._id} cls={cls} index={index} handleApprove={handleApprove} handleDeny={handleDeny} />)}
                     </tbody>
                 </table>
             </div>

@@ -54,6 +54,7 @@ const AuthProvider = ({ children }) => {
                 localStorage.removeItem('token')
             }
         })
+        return () => unsubscribe()
     }, [])
 
     const userInfo = {

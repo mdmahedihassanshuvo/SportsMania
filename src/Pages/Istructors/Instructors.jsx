@@ -6,17 +6,21 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { AuthContext } from '../../Provider/AuthProvider';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import useInstructor from '../../Hooks/useInstructor';
+import axios from 'axios';
 
 const Instructors = () => {
 
     const { user, loading } = useContext(AuthContext)
-    console.log(user)
-    const [axiosSecure] = useAxiosSecure()
+    // console.log(user)
+    // const [axiosSecure] = useAxiosSecure()
+    // const [isInstructor] = useInstructor()
+    // console.log(isInstructor)
     const { data: instructors = [], refetch } = useQuery({
         queryKey: ['instructors'],
-        enabled: !loading,
+        // enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get('/users?role=instructor')
+            const res = await axios.get('http://localhost:5000/users?role=instructor')
             console.log(res.data)
             return res.data;
         }
@@ -32,7 +36,7 @@ const Instructors = () => {
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     instructors.map(instructor =>
-                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={instructor.id}>
+                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={instructor._id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
                                     className="rounded-xl"
