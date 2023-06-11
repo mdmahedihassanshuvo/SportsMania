@@ -21,9 +21,9 @@ const Classes = () => {
     const [axiosSecure] = useAxiosSecure();
     const { data: approveClasses = [], refetch } = useQuery({
         queryKey: ['approveClasses'],
-        // enabled: !loading,
+        // enabled: !loading && user.email,
         queryFn: async () => {
-            const res = await axios('http://localhost:5000/addedClasses?status=approve');
+            const res = await axios.get('http://localhost:5000/addedClasses?status=approve');
             console.log(res.data);
             return res.data;
         },

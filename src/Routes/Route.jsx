@@ -18,6 +18,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import FeedBack from "../Reused/FeedBack";
 import PaymentHistory from "../Pages/Dashboard/Components/Student/PaymentHistory";
+import Payment from "../Pages/Dashboard/Components/Student/Payment";
 
 const router = createBrowserRouter([
   {
@@ -68,7 +69,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'paymentHistory',
-        element: <PaymentHistory/>
+        element: <PaymentHistory />
       },
       {
         path: 'addclass',
@@ -80,7 +81,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'feedBack/:id',
-        element: <FeedBack/>
+        element: <FeedBack />
+      },
+      {
+        path: 'payment/:price',
+        element: <Payment />
       }
     ]
   },

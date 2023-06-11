@@ -9,7 +9,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 const Dashboard = () => {
 
     const {user} = useContext(AuthContext)
-    console.log(user)
+    // console.log(user)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
 

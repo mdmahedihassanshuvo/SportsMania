@@ -61,7 +61,7 @@ const Header = () => {
                 <span className='text-lg font-medium'>Classes</span>
             </NavLink>
         </li>
-        <li>
+        {user && <li>
             <NavLink
                 to='/dashboard'
                 className={({ isActive }) =>
@@ -72,7 +72,7 @@ const Header = () => {
             >
                 <span className='text-lg font-medium'>Dashboard</span>
             </NavLink>
-        </li>
+        </li>}
         {user ?
             <>
                 <button onClick={handleLogout} className="btn btn-ghost mr-2"><span className='text-lg font-medium'>Logout</span></button>

@@ -3,6 +3,7 @@ import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 
 const SelectedClasses = () => {
 
@@ -13,14 +14,14 @@ const SelectedClasses = () => {
         enabled: !loading,
         queryFn: async () => {
             const res = await axiosSecure.get(`/selectClasses/${user?.email}`)
-            console.log(res.data);
+            // console.log(res.data);
             return res.data
         }
     })
 
     return (
         <div>
-            <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Here are Your Selected Classes: {selectClasses.length}</h2>
+            {selectClasses.length <= 0 ? <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Please Selected Classes</h2> : <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Here are Your Selected Classes: {selectClasses.length}</h2>}
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     selectClasses.map((cla) => (
@@ -38,7 +39,7 @@ const SelectedClasses = () => {
                                 <p>Available Seats: {cla.available_seats}</p>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <button onClick={() => handleSelect(cla)} className="btn btn-accent text-white" >Pay Now</button>
+                                    <Link to={`/dashboard/payment/${cla.price}`} className="btn btn-accent text-white" >Pay Now</Link>
                                 </div>
                             </div>
                         </div>
