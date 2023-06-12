@@ -5,10 +5,11 @@ import { FaHome, FaUsers } from "react-icons/fa";
 import useAdmin from '../../Hooks/useAdmin';
 import useInstructor from '../../Hooks/useInstructor';
 import { AuthContext } from '../../Provider/AuthProvider';
+import { motion } from "framer-motion"
 
 const Dashboard = () => {
 
-    const {user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     // console.log(user)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
@@ -39,9 +40,30 @@ const Dashboard = () => {
                     )}
                     {!isAdmin && !isInstructor && (
                         <>
-                            <li><NavLink to='/dashboard/selectedclass'><MdClass /> Selected Classes</NavLink></li>
-                            <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
-                            <li><NavLink to='/dashboard/paymentHistory'><MdHotelClass /> Payment History</NavLink></li>
+                            <li><NavLink to='/dashboard/selectedclass'><motion.button
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                  }}
+                                  whileTap={{ scale: 0.5 }}
+                            >
+                                Selected Classes
+                            </motion.button></NavLink></li>
+                            <li><NavLink to='/dashboard/enrollclass'><motion.button
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                  }}
+                                  whileTap={{ scale: 0.5 }}
+                            >
+                                Enrolled Classes
+                            </motion.button></NavLink></li>
+                            <li><NavLink to='/dashboard/paymentHistory'><motion.button
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                  }}
+                                  whileTap={{ scale: 0.5 }}
+                            >
+                                Payment History
+                            </motion.button></NavLink></li>
                         </>
                     )}
 
