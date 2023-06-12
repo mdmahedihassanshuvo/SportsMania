@@ -41,7 +41,7 @@ const Dashboard = () => {
                         <>
                             <li><NavLink to='/dashboard/selectedclass'><MdClass /> Selected Classes</NavLink></li>
                             <li><NavLink to='/dashboard/enrollclass'><MdHotelClass /> Enroll Classes</NavLink></li>
-                            <li><NavLink to='/dashboard/paymentHistory'><MdHotelClass /> Payment Classes</NavLink></li>
+                            <li><NavLink to='/dashboard/paymentHistory'><MdHotelClass /> Payment History</NavLink></li>
                         </>
                     )}
 

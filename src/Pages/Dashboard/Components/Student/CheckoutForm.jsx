@@ -2,17 +2,21 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../../../Provider/AuthProvider";
+import { Navigate } from "react-router-dom";
 
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ item }) => {
 
-    // console.log(parseInt(price))
+    const { price, name, image, _id, classId } = item?.[0] || {}
+    console.log(parseInt(price))
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
     const [clientSecret, setClientSecret] = useState("");
     const [cardError, setCardError] = useState('')
+    const [transactionId, setTransactionId] = useState('')
+    const [processing, setProcessing] = useState(false)
 
     useEffect(() => {
         if (price > 0) {
@@ -36,7 +40,7 @@ const CheckoutForm = ({ price }) => {
         }
         console.log('card', card)
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card,
         })
@@ -47,8 +51,10 @@ const CheckoutForm = ({ price }) => {
         }
         else {
             setCardError('')
-            console.log('payment method', paymentMethod)
+            // console.log('payment method', paymentMethod)
         }
+
+        setProcessing(true)
 
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
             clientSecret,
@@ -68,6 +74,34 @@ const CheckoutForm = ({ price }) => {
         }
 
         console.log(paymentIntent)
+
+        setProcessing(false)
+
+        if (paymentIntent.status === "succeeded") {
+            setTransactionId(paymentIntent.id)
+            const payment = {
+                email: user?.email,
+                transactionId: paymentIntent.id,
+                price,
+                classItemId: _id,
+                name: name,
+                image: image,
+                date: new Date(),
+
+            }
+            axiosSecure.post('/payments', payment)
+                .then(res => {
+                    console.log(res.data.result);
+                    if (res.data.result.insertedId) {
+                        console.log('success payment')
+                        axiosSecure.patch(`/addedClasses?id=${classId}`)
+                            .then(res => {
+                                console.log(res.data);
+                                <Navigate to='/'/>
+                            })
+                    }
+                })
+        }
 
     }
 
@@ -90,11 +124,12 @@ const CheckoutForm = ({ price }) => {
                         },
                     }}
                 />
-                <button type="submit" className="btn bg-orange-600 btn-sm my-5" disabled={!stripe || !clientSecret}>
+                <button type="submit" className="btn bg-orange-600 btn-sm my-5" disabled={!stripe || !clientSecret || processing}>
                     Pay
                 </button>
             </form>
             {cardError && <p className="text-center text-red-600 my-5">{cardError}</p>}
+            {transactionId && <p className="text-center text-green-600 my-5">Payment successful Transaction id: {transactionId}</p>}
         </>
     );
 };

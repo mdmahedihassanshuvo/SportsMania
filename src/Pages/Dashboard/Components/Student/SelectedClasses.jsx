@@ -13,8 +13,8 @@ const SelectedClasses = () => {
         queryKey: ['selectedClasses', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get(`/selectClasses/${user?.email}`)
-            // console.log(res.data);
+            const res = await axiosSecure.get(`/selectClasses?email=${user?.email}`)
+            console.log(res.data);
             return res.data
         }
     })
@@ -39,7 +39,7 @@ const SelectedClasses = () => {
                                 <p>Available Seats: {cla.available_seats}</p>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <Link to={`/dashboard/payment/${cla.price}`} className="btn btn-accent text-white" >Pay Now</Link>
+                                    <Link to={`/dashboard/payment/${cla._id}`} className="btn btn-accent text-white" >Pay Now</Link>
                                 </div>
                             </div>
                         </div>

@@ -35,21 +35,21 @@ const Classes = () => {
         console.log('click')
         if (!user) {
             navigate('/login');
-         }
-         const { available_seats, price, name, instructor, image } = cla;
-         axiosSecure.post(`/selectClasses/${user.email}`, { email: user.email, available_seats, price: parseFloat(price), name, instructor, image })
-             .then(res => {
-                 console.log(res.data)
-                 if (res.data.insertedId) {
-                     Swal.fire({
-                         position: 'center',
-                         icon: 'success',
-                         title: `${cla.name} is selected`,
-                         showConfirmButton: false,
-                         timer: 1500
-                     })
-                 }
-             })
+        }
+        const { available_seats, price, name, instructor, image, _id } = cla;
+        axiosSecure.post(`/selectClasses/${user.email}`, { classId: _id, email: user.email, available_seats, price: parseFloat(price), name, instructor, image })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${cla.name} is selected`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
     }
 
     return (
@@ -63,7 +63,7 @@ const Classes = () => {
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {
                     approveClasses.map((cla) => (
-                        <div className="card col-span-4 md:col-span-2 w-96 bg-base-100 shadow-xl" key={cla._id}>
+                        <div className={`card col-span-4 md:col-span-2 w-96 ${cla.available_seats == 0 ? 'bg-red-500':'bg-base-100'} shadow-xl`} key={cla._id}>
                             <figure className="px-10 pt-10">
                                 <LazyLoadImage
                                     className="rounded-xl"
@@ -77,7 +77,7 @@ const Classes = () => {
                                 <p>Available Seats: {cla.available_seats}</p>
                                 <p>Price: ${cla.price}</p>
                                 <div className="card-actions">
-                                    <button onClick={() => handleSelect(cla)} className="btn btn-accent text-white" disabled={isAdmin || isInstructor}>Select Now</button>
+                                    <button onClick={() => handleSelect(cla)} className="btn btn-accent text-white" disabled={isAdmin || isInstructor || cla.available_seats == 0}>Select Now</button>
                                 </div>
                             </div>
                         </div>

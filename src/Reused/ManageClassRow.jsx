@@ -48,7 +48,7 @@ const ManageClassRow = ({ cls, index, handleDeny, handleApprove }) => {
                 {cls.status === 'feedback' ? (
                     'feedback'
                 ) : (
-                    <Link disabled={cls.feedBack} to={`/dashboard/feedback/${cls._id}`} className="btn bg-orange-600 hover:bg-slate-700 text-white btn-sm">Feedback</Link>
+                    <Link disabled={cls.status === 'approve'} to={`/dashboard/feedback/${cls._id}`} className="btn bg-orange-600 hover:bg-slate-700 text-white btn-sm">Feedback</Link>
                     // <button
                     //     onClick={() => handleFeedback(event, cls)}
                     //     className="btn bg-orange-600 hover:bg-slate-700 text-white btn-sm"

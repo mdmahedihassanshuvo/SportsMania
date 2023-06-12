@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         element: <FeedBack />
       },
       {
-        path: 'payment/:price',
+        path: 'payment/:id',
         element: <Payment />
       }
     ]
