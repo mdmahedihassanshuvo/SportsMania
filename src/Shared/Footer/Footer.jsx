@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="footer pt-10 pb-2 flex flex-col justify-center items-center bg-neutral text-neutral-content">
+        <footer className="footer px-3 lg:px-0 pt-10 pb-2 flex flex-col justify-center items-center bg-neutral text-neutral-content">
             <div className="flex flex-col lg:flex-row justify-between lg:px-20 w-full ">
                 <div className='space-y-2'>
                     <span className="footer-title text-xl">Services</span>

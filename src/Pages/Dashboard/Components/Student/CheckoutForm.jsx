@@ -2,7 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../../../Provider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const CheckoutForm = ({ item }) => {
@@ -10,6 +10,7 @@ const CheckoutForm = ({ item }) => {
     const { price, name, image, _id, classId } = item?.[0] || {}
     console.log(parseInt(price))
     const stripe = useStripe();
+    const navigate = useNavigate()
     const elements = useElements();
     const { user } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
@@ -96,8 +97,8 @@ const CheckoutForm = ({ item }) => {
                         console.log('success payment')
                         axiosSecure.patch(`/addedClasses?id=${classId}`)
                             .then(res => {
-                                console.log(res.data);
-                                <Navigate to='/'/>
+                                console.log('done', res.data);
+                                navigate('/')
                             })
                     }
                 })
