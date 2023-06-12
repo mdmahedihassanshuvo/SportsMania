@@ -4,6 +4,7 @@ import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../Provider/AuthProvider';
+import { Helmet } from 'react-helmet-async';
 
 const AddClass = () => {
 
@@ -32,6 +33,9 @@ const AddClass = () => {
 
     return (
         <div className='w-full'>
+            <Helmet>
+                <title>SportsMania | Add Classes</title>
+            </Helmet>
             <h2 className='text-center text-accent text-3xl mb-5'>Add Your Class Here</h2>
             <form className='mx-20' onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full mb-5">

@@ -20,7 +20,7 @@ const Instructors = () => {
         queryKey: ['instructors'],
         // enabled: !loading,
         queryFn: async () => {
-            const res = await axios.get('http://localhost:5000/users?role=instructor')
+            const res = await axios.get('https://summer-server-theta.vercel.app/users?role=instructor')
             console.log(res.data)
             return res.data;
         }

@@ -23,7 +23,7 @@ const Classes = () => {
         queryKey: ['approveClasses'],
         // enabled: !loading && user.email,
         queryFn: async () => {
-            const res = await axios.get('http://localhost:5000/addedClasses?status=approve');
+            const res = await axios.get('https://summer-server-theta.vercel.app/addedClasses?status=approve');
             console.log(res.data);
             return res.data;
         },

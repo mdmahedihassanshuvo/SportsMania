@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser);
 
             if (currentUser) {
-                axios.post('http://localhost:5000/jwt', { email: currentUser.email })
+                axios.post('https://summer-server-theta.vercel.app/jwt', { email: currentUser.email })
                     .then(res => {
                         // console.log(res.data.token);
                         localStorage.setItem('token', res.data.token);

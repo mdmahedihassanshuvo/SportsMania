@@ -1,5 +1,6 @@
 import React from 'react';
 import useMyClass from '../../../../Hooks/useMyClass';
+import { Helmet } from 'react-helmet-async';
 
 const MyClass = () => {
 
@@ -7,6 +8,9 @@ const MyClass = () => {
 
     return (
         <div className='w-3/4'>
+            <Helmet>
+                <title>SportsMania | My Classes</title>
+            </Helmet>
             <h2 className='text-center text-accent text-3xl my-5'>My Total classes: {myClasses.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table">

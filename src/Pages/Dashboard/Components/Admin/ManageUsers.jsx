@@ -4,13 +4,14 @@ import React, { useContext } from 'react';
 import { FaUser, FaUserAlt, FaUserGraduate, FaUserShield } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import useUser from '../../../../Hooks/useUser';
+import { Helmet } from 'react-helmet-async';
 
 const ManageUsers = () => {
 
     const [users, refetch] = useUser()
 
     const handleInstructor = (user) => {
-        axios.patch('http://localhost:5000/users/admin', { email: user?.email })
+        axios.patch('https://summer-server-theta.vercel.app/users/admin', { email: user?.email })
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();
@@ -27,7 +28,7 @@ const ManageUsers = () => {
 
 
     const handleAdmin = (user) => {
-        axios.patch(`http://localhost:5000/users/admin/${user?._id}`)
+        axios.patch(`https://summer-server-theta.vercel.app/users/admin/${user?._id}`)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch()
@@ -44,6 +45,9 @@ const ManageUsers = () => {
 
     return (
         <div className='w-ll'>
+            <Helmet>
+                <title>SportsMania | Manage Users</title>
+            </Helmet>
             <h2 className='text-center text-accent my-10 text-3xl'>User Management: Streamlining Access and Permissions</h2>
             <div className="overflow-x-auto">
                 <table className="table">

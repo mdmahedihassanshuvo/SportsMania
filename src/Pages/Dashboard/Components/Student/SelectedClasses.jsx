@@ -4,6 +4,7 @@ import { AuthContext } from '../../../../Provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const SelectedClasses = () => {
 
@@ -21,6 +22,9 @@ const SelectedClasses = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>SportsMania | Selected Classes</title>
+            </Helmet>
             {selectClasses.length <= 0 ? <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Please Selected Classes</h2> : <h2 className='lg:my-20 my-5 text-3xl font-semibold text-center text-accent'>Here are Your Selected Classes: {selectClasses.length}</h2>}
             <div className='flex flex-wrap justify-center gap-5 mx-4 md:mx-0'>
                 {

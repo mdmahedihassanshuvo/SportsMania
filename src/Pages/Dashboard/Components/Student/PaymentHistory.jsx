@@ -1,5 +1,6 @@
 import React from 'react';
 import usePaidClasses from '../../../../Hooks/usePaidClasses';
+import { Helmet } from 'react-helmet-async';
 
 const PaymentHistory = () => {
 
@@ -7,6 +8,9 @@ const PaymentHistory = () => {
 
     return (
         <div className='w-3/4'>
+            <Helmet>
+                <title>SportsMania | Payment History</title>
+            </Helmet>
             <h2 className='text-center text-accent text-3xl my-10'>Here are Your payment history !!</h2>
             <div className="overflow-x-auto">
                 <table className="table">

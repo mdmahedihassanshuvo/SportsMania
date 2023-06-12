@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import ManageClassRow from '../../../../Reused/ManageClassRow';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../../Provider/AuthProvider';
+import { Helmet } from 'react-helmet-async';
 
 const ManageClasses = () => {
     // const [myClasses, refetch] = useMyClass();
@@ -61,6 +62,9 @@ const ManageClasses = () => {
 
     return (
         <div className="w-3/4">
+            <Helmet>
+                <title>SportsMania | Manage Classes</title>
+            </Helmet>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}

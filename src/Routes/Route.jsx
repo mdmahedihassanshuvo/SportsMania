@@ -19,11 +19,13 @@ import AdminRoute from "./AdminRoute";
 import FeedBack from "../Reused/FeedBack";
 import PaymentHistory from "../Pages/Dashboard/Components/Student/PaymentHistory";
 import Payment from "../Pages/Dashboard/Components/Student/Payment";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: '/',
