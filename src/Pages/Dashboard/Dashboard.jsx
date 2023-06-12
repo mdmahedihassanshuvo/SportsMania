@@ -28,39 +28,73 @@ const Dashboard = () => {
                     <li><NavLink to='/'><FaHome /> Home</NavLink></li>
                     {isAdmin && (
                         <>
-                            <li><NavLink to='/dashboard/manageclasses'><MdClass /> Manage classes</NavLink></li>
-                            <li><NavLink to='/dashboard/allusers'><FaUsers /> Manage Users</NavLink></li>
+                            <li><NavLink to='/dashboard/manageclasses'><motion.button
+                                className='flex justify-center gap-2 items-center'
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                }}
+                                whileTap={{ scale: 0.5 }}
+                            >
+                                <MdClass />Manage classes
+                            </motion.button></NavLink></li>
+                            <li><NavLink to='/dashboard/allusers'><motion.button
+                                className='flex justify-center gap-2 items-center'
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                }}
+                                whileTap={{ scale: 0.5 }}
+                            >
+                                <FaUsers />Manage Users
+                            </motion.button></NavLink></li>
                         </>
                     )}
                     {!isAdmin && isInstructor && (
                         <>
-                            <li><NavLink to='/dashboard/addclass'><MdClass /> Add Class</NavLink></li>
-                            <li><NavLink to='/dashboard/myclass'><MdFlightClass /> My class</NavLink></li>
+                            <li><NavLink to='/dashboard/addclass'><motion.button
+                                className='flex justify-center gap-2 items-center'
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                }}
+                                whileTap={{ scale: 0.5 }}
+                            >
+                                <MdFlightClass />Add Class
+                            </motion.button></NavLink></li>
+                            <li><NavLink to='/dashboard/myclass'><motion.button
+                                className='flex justify-center gap-2 items-center'
+                                whileHover={{
+                                    transition: { duration: 1 },
+                                }}
+                                whileTap={{ scale: 0.5 }}
+                            >
+                                <MdClass />My Classes
+                            </motion.button></NavLink></li>
                         </>
                     )}
                     {!isAdmin && !isInstructor && (
                         <>
                             <li><NavLink to='/dashboard/selectedclass'><motion.button
+                                className='flex justify-center gap-2 items-center'
                                 whileHover={{
                                     transition: { duration: 1 },
-                                  }}
-                                  whileTap={{ scale: 0.5 }}
+                                }}
+                                whileTap={{ scale: 0.5 }}
                             >
-                                Selected Classes
+                                <MdHotelClass />Selected Classes
                             </motion.button></NavLink></li>
                             <li><NavLink to='/dashboard/enrollclass'><motion.button
+                                className='flex justify-center gap-2 items-center'
                                 whileHover={{
                                     transition: { duration: 1 },
-                                  }}
-                                  whileTap={{ scale: 0.5 }}
+                                }}
+                                whileTap={{ scale: 0.5 }}
                             >
-                                Enrolled Classes
+                                <MdHotelClass />Enrolled Classes
                             </motion.button></NavLink></li>
                             <li><NavLink to='/dashboard/paymentHistory'><motion.button
                                 whileHover={{
                                     transition: { duration: 1 },
-                                  }}
-                                  whileTap={{ scale: 0.5 }}
+                                }}
+                                whileTap={{ scale: 0.5 }}
                             >
                                 Payment History
                             </motion.button></NavLink></li>
